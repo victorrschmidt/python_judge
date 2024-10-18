@@ -128,6 +128,7 @@ class Judge:
         Caso todos os casos de teste estejam corretos, é mostrada a mensagem
         de "Accepted".
         """
+
         self.check_io_files()
 
         for test_case_name in self.io_file_list:
