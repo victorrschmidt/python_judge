@@ -1,6 +1,6 @@
 # Python judge
 
-Python judge é um sistema de testes de arquivos baseados em input e output, sendo possível verificar a saída produzida por programas e comparar com a saída esperada. O sistema segue o mesmo propósito de algoritmos de judges online, utilizados em sites de programação como Codeforces e Beecrowd.
+Python judge é um simples sistema de testes de arquivos baseados em input e output, sendo possível verificar a saída produzida por programas e comparar com a saída esperada. O sistema segue o mesmo propósito de algoritmos de judges online, utilizados em sites de programação como Codeforces e Beecrowd.
 
 ## Instalação
 
