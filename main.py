@@ -11,7 +11,7 @@ TIME_LIMIT = 2
 class Judge:
     def __init__(self) -> None:
         """
-        Construtor da classe; Define o caminho do arquivo de submissão e
+        Construtor da classe; define o caminho do arquivo de submissão e
         verifica 3 coisas:
 
         - Verifica se foi especificado um arquivo de submissão no argv.
@@ -37,13 +37,12 @@ class Judge:
 
     def check_io_files(self) -> None:
         """
-        Função para verificar e definir os arquivos de entrada e saída. Cada
-        par .in e .sol forma um caso de teste para ser julgado. A função
-        verifica 3 coisas:
+        Função para verificar e definir os casos de teste. Cada par .in e .sol
+        forma um caso de teste para ser julgado. A função verifica 3 coisas:
 
         - Verifica se todos os arquivos contidos no folder 'io' são .in ou .sol.
         - Verifica se cada arquivo .in possui um arquivo .sol de mesmo nome.
-        - Verifica se pelo existe menos um par de arquivos .in e .sol no folder 'io'.
+        - Verifica se existe pelo menos um par de arquivos .in e .sol no folder 'io'.
         """
 
         self.io_file_list = []
@@ -92,8 +91,14 @@ class Judge:
 
     def run_test_case(self, test_case_name: str) -> None:
         """
+        Função para executar o arquivo de submissão com o arquivo .in do caso
+        de teste, e em seguida chamar a função para comparar a saída com o
+        conteúdo do arquivo .sol correspondente. São verificadas 2 coisas:
 
+        - Verifica se a submissão excedeu o tempo limite de execução.
+        - Verifica se a submissão não apresentou nenhum erro de execução.
         """
+
         in_file = Path(f"{IO_FOLDER.name}/{test_case_name}.in")
         sol_file = Path(f"{IO_FOLDER.name}/{test_case_name}.sol")
 
@@ -118,7 +123,10 @@ class Judge:
 
     def execute(self) -> None:
         """
-
+        Função principal do Judge, responsável por chamar as funções de
+        verificação de arquivos de .in e .sol e de execução dos casos de teste.
+        Caso todos os casos de teste estejam corretos, é mostrada a mensagem
+        de "Accepted".
         """
         self.check_io_files()
 
