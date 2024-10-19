@@ -1,39 +1,19 @@
 import sys
 import subprocess
 from pathlib import Path
+from lib.files import *
+from lib.interpreter import interpreter
 from lib.logger import logger
 
-SUBMISSION_FOLDER = Path('submissions')
-IO_FOLDER = Path('io')
-OUTPUT_FILE = Path('output.txt')
 TIME_LIMIT = 2
 
-class Judge:
+class judge:
     def __init__(self) -> None:
         """
-        Construtor da classe; define o caminho do arquivo de submissão e
-        verifica 3 coisas:
-
-        - Verifica se foi especificado um arquivo de submissão no argv.
-        - Verifica se o arquivo especificado no argv existe.
-        - Verifica se o arquivo especificado no argv é um arquivo Python.
+        Construtor da classe; define o caminho do arquivo de submissão.
         """
 
-        try:
-            self.submission_file_path = f"{SUBMISSION_FOLDER.name}/{sys.argv[1]}"
-        except IndexError:
-            logger.argv()
-            sys.exit(1)
-
-        submission_file = Path(self.submission_file_path)
-
-        if not submission_file.exists():
-            logger.file_not_found(submission_file.name)
-            sys.exit(1)
-
-        if submission_file.suffix != '.py':
-            logger.invalid_submission_file(submission_file.name)
-            sys.exit(1)
+        self.submission_file_path = f"{SUBMISSION_FOLDER.name}/{sys.argv[1]}"
 
     def check_io_files(self) -> None:
         """
@@ -50,26 +30,26 @@ class Judge:
 
         for file in IO_FOLDER.iterdir():
             if file.suffix not in file_dict:
-                logger.invalid_io_file(file.name)
+                logger.error_io_file_invalid(file.name)
                 sys.exit(1)
             file_dict[file.suffix].add(file.stem)
 
         for file_stem in file_dict['.in']:
             if file_stem not in file_dict['.sol']:
-                logger.missing_sol_file(f"{file_stem}.in")
+                logger.error_sol_file_missing(file_stem)
                 sys.exit(1)
             self.io_file_list.append(file_stem)
 
         if len(self.io_file_list) == 0:
-            logger.no_in_files()
+            logger.error_in_file_missing()
             sys.exit(1)
 
     def judge_solution(self, sol_file: Path) -> None:
         """
         Função para verificar se o arquivo output.txt produziu a mesma saída
-        definida pelo arquivo .sol. As linhas são verificadas uma a uma, e em
-        caso de descrepância, a execução do Judge é encerrada e é mostrado
-        o erro correspondente. A função verifica 2 coisas:
+        definida pelo arquivo .sol do caso de teste. As linhas são verificadas
+        uma a uma, e em caso de descrepância, a execução do Judge é encerrada e
+        é mostrado o erro encontrado. A função verifica 2 coisas:
 
         - Verifica se o arquivo output.txt possui o mesmo número de linhas que
         o arquivo .sol correspondente.
@@ -81,12 +61,12 @@ class Judge:
         sol_lines = sol_file.read_text().split('\n')
 
         if len(output_lines) != len(sol_lines):
-            logger.len_output_lines(len(output_lines), len(sol_lines))
+            logger.judge_output_lines_number(len(output_lines), len(sol_lines))
             sys.exit(1)
 
         for i in range(len(output_lines)):
             if output_lines[i] != sol_lines[i]:
-                logger.wrong_answer(output_lines[i], sol_lines[i])
+                logger.judge_wrong_answer(output_lines[i], sol_lines[i])
                 sys.exit(1)
 
     def run_test_case(self, test_case_name: str) -> None:
@@ -113,7 +93,7 @@ class Judge:
                     timeout=TIME_LIMIT
                 )
             except subprocess.TimeoutExpired:
-                logger.time_limit_exceeded(TIME_LIMIT)
+                logger.judge_time_limit_exceeded(TIME_LIMIT)
                 sys.exit(1)
 
             if process.returncode == 1:
@@ -134,8 +114,9 @@ class Judge:
         for test_case_name in self.io_file_list:
             self.run_test_case(test_case_name)
 
-        logger.accepted_answer()
+        logger.judge_accepted_answer()
 
 if __name__ == '__main__':
-    judge = Judge()
-    judge.execute()
+    interpreter.validate_argv()
+    j = judge()
+    j.execute()
