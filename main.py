@@ -10,9 +10,9 @@ class judge:
             os.environ['PATH'] += f"{os.pathsep}{GCC_PATH}"
 
         command_list = (
-            'cd submissions',
+            f"cd {SUBMISSION_FOLDER.name}",
             'g++ bee.cpp -o run',
-            f"run.exe < ../io/input.in > ../io/output.txt"
+            f"run.exe < ../io/{INPUT_FILE.name} > ../io/{OUTPUT_FILE.name}"
         )
 
         os.system(' && '.join(command_list))
