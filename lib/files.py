@@ -1,5 +1,7 @@
 from pathlib import Path
 
+GCC_PATH = 'C:\\msys64\\ucrt64\\bin'
 SUBMISSION_FOLDER = Path('submissions')
-IO_FOLDER = Path('io')
-OUTPUT_FILE = Path('output.txt')
+INPUT_FILE = Path('io/input.in')
+SOL_FILE = Path('io/expected.sol')
+OUTPUT_FILE = Path('io/output.txt')
