@@ -10,27 +10,15 @@ class logger:
         print(f"{logger.text_line}\nJudge: {message}\n{logger.text_line}")
 
     @staticmethod
-    def error_argc_number() -> None:
-        message = f"Número de argumentos insuficiente.\n\n" \
-                  f"py main.py\n" \
+    def error_argc() -> None:
+        message = f"Número de argumentos inválido."
+        logger.log_error(message)
+
+    @staticmethod
+    def error_submission_extension(suffix: str) -> None:
+        message = f"Extensão de arquivo inválida.\n\n" \
+                  f"py main.py {suffix}\n" \
                   f"{' ' * 11}^"
-        logger.log_error(message)
-
-    @staticmethod
-    def error_submission_file_missing(file_name: str) -> None:
-        message = f"O arquivo '{file_name}' não foi encontrado.\n\n" \
-                  f"py main.py {file_name}\n" \
-                  f"{' ' * 11}^\n\n" \
-                  f"Certifique-se de que o arquivo está no diretório\n" \
-                  f"submissions/ e se possui o mesmo nome especificado."
-        logger.log_error(message)
-
-    @staticmethod
-    def error_submission_file_invalid(file_name: str) -> None:
-        file_name_suffix_len = len(file_name[0: file_name.index('.')])
-        message = f"O arquivo de submissão precisa ser um arquivo C++.\n\n" \
-                  f"py main.py {file_name}\n" \
-                  f"{' ' * (12 + file_name_suffix_len)}^"
         logger.log_error(message)
 
     @staticmethod

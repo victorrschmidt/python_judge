@@ -6,15 +6,7 @@ from lib.logger import logger
 
 class judge:
     def run_file(self) -> None:
-        if GCC_PATH not in os.environ['PATH'].split(os.pathsep):
-            os.environ['PATH'] += f"{os.pathsep}{GCC_PATH}"
-
-        command_list = (
-            f"cd {SUBMISSION_FOLDER.name}",
-            'g++ bee.cpp -o run',
-            f"run.exe < ../io/{INPUT_FILE.name} > ../io/{OUTPUT_FILE.name}"
-        )
-
+        command_list = LANGUAGES[sys.argv[1]]
         os.system(' && '.join(command_list))
 
     def judge_solution(self) -> None:

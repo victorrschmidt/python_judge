@@ -1,7 +1,16 @@
 from pathlib import Path
 
-GCC_PATH = 'C:\\msys64\\ucrt64\\bin'
-SUBMISSION_FOLDER = Path('submissions')
-INPUT_FILE = Path('io/input.in')
 SOL_FILE = Path('io/expected.sol')
 OUTPUT_FILE = Path('io/output.txt')
+
+LANGUAGES = {
+    'cpp': (
+        f"cd submissions",
+        f"g++ bee.cpp -o run",
+        f"run.exe < ../io/input.in > ../io/output.txt"
+    ),
+    'py': (
+        f"cd submissions",
+        f"py bee.py < ../io/input.in > ../io/output.txt"
+    )
+}
