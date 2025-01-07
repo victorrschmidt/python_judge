@@ -7,7 +7,10 @@ from lib.logger import logger
 class judge:
     def run_file(self) -> None:
         command_list = LANGUAGES[sys.argv[1]]
-        os.system(' && '.join(command_list))
+        exit_status = os.system(' && '.join(command_list))
+
+        if exit_status == 1:
+            sys.exit(1)
 
     def judge_solution(self) -> None:
         output_lines = OUTPUT_FILE.read_text().split('\n')
