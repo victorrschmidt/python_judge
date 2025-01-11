@@ -1,5 +1,5 @@
 import sys
-from lib.files import LANGUAGES
+from lib.languages import LANGUAGES
 from lib.logger import logger
 
 def validate_argv() -> None:
