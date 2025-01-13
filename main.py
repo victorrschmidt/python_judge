@@ -8,10 +8,13 @@ SOLUTION_FILE = Path('io/expected.sol')
 OUTPUT_FILE = Path('io/output.txt')
 
 class judge:
-    def validate_argv(self) -> None:
+    def __init__(self):
+        self.output_only = False
+
+    def validate_argv(self) -> int:
         argc = len(sys.argv)
 
-        if argc != 2:
+        if argc < 2 or argc > 3:
             logger.error_argc()
             sys.exit(1)
 
@@ -19,6 +22,17 @@ class judge:
 
         if suffix not in LANGUAGES:
             logger.error_submission_extension(suffix)
+            sys.exit(1)
+
+        if argc == 2:
+            return
+
+        optional_argv = sys.argv[2]
+
+        if optional_argv == '-o':
+            self.output_only = True
+        else:
+            logger.error_unknown_command(optional_argv)
             sys.exit(1)
 
     def run_file(self) -> None:
@@ -44,11 +58,20 @@ class judge:
                 logger.judge_wrong_answer(output_lines[i], solution_lines[i])
                 sys.exit(1)
 
+        logger.judge_accepted_answer()
+
+    def print_output(self) -> None:
+        logger.log(OUTPUT_FILE.read_text())
+        sys.exit(1)
+
     def execute(self) -> None:
         self.validate_argv()
         self.run_file()
-        self.judge_solution()
-        logger.judge_accepted_answer()
+
+        if self.output_only:
+            self.print_output()
+        else:
+            self.judge_solution()
 
 if __name__ == '__main__':
     j = judge()
