@@ -9,6 +9,7 @@ OUTPUT_FILE = Path('io/output.txt')
 
 class judge:
     def __init__(self):
+        self.running_lang = None
         self.output_only = False
 
     def validate_argv(self) -> int:
@@ -18,11 +19,13 @@ class judge:
             logger.error_argc()
             sys.exit(1)
 
-        suffix = sys.argv[1]
+        lang = sys.argv[1]
 
-        if suffix not in LANGUAGES:
-            logger.error_submission_extension(suffix)
+        if lang not in LANGUAGES:
+            logger.error_submission_language(lang)
             sys.exit(1)
+
+        self.running_lang = lang
 
         if argc == 2:
             return
@@ -36,8 +39,7 @@ class judge:
             sys.exit(1)
 
     def run_file(self) -> None:
-        suffix = sys.argv[1]
-        command_list = LANGUAGES[suffix]
+        command_list = LANGUAGES[self.running_lang]
         exit_status = os.system(' && '.join(command_list))
 
         if exit_status == 1:
@@ -62,7 +64,6 @@ class judge:
 
     def print_output(self) -> None:
         logger.log(OUTPUT_FILE.read_text())
-        sys.exit(1)
 
     def execute(self) -> None:
         self.validate_argv()

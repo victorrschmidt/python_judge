@@ -24,7 +24,7 @@ class logger:
         logger.log_error(message)
 
     @staticmethod
-    def error_submission_extension(suffix: str) -> None:
+    def error_submission_language() -> None:
         message = f"Extensão de arquivo inválida."
         logger.log_error(message)
 
