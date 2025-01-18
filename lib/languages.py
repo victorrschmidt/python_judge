@@ -1,11 +1,11 @@
 LANGUAGES = {
     'cpp': (
-        f"cd submissions",
-        f"g++ bee.cpp -o run",
-        f"run.exe < ../io/input.in > ../io/output.txt"
+        'cd submissions',
+        'g++ bee.cpp -o run',
+        'run.exe < ../io/input.in > ../io/output.txt'
     ),
     'py': (
-        f"cd submissions",
-        f"py bee.py < ../io/input.in > ../io/output.txt"
+        'cd submissions',
+        'py bee.py < ../io/input.in > ../io/output.txt'
     )
 }

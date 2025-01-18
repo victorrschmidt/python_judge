@@ -12,7 +12,7 @@ class judge:
         self.running_lang = None
         self.output_only = False
 
-    def validate_argv(self) -> int:
+    def validate_argv(self) -> None:
         argc = len(sys.argv)
 
         if argc < 2 or argc > 3:
